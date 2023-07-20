@@ -1,0 +1,39 @@
+public class CaseManagementController {
+    public ApexPages.StandardSetController priorityCasesController {
+        get {
+            if (priorityCasesController == null) {
+                List<Case> cases = [SELECT Id, Subject, Status, Priority, Account.Name, Account.SLA__c, CaseNumber
+                                    FROM Case WHERE IsClosed != TRUE
+                                   ORDER BY Priority ASC];
+                priorityCasesController = new ApexPages.StandardSetController(cases);
+            }
+            return priorityCasesController;
+        }
+        set;
+    }
+    
+    public List<Case> getPriorityCases(){
+        return (List<Case>) priorityCasesController.getRecords();
+    }
+
+    public PageReference sortBySLA() {
+        List<Case> cases = [SELECT Id, Subject, Status, Priority, Account.Name, Account.SLA__c, CaseNumber
+                                    FROM Case WHERE IsClosed != TRUE
+                            ORDER BY Account.SLA__c DESC];
+
+        // Assign the sorted cases to the StandardSetController to update the data in the pageBlockTable
+        priorityCasesController = new ApexPages.StandardSetController(cases);
+
+        // Return null to refresh the current page
+        return null;
+    }
+    
+    public PageReference sortByPriority(){
+        List<Case> cases = [SELECT Id, Subject, Status, Priority, Account.Name, Account.SLA__c, CaseNumber
+                                    FROM Case WHERE IsClosed != TRUE
+                            ORDER BY Priority ASC];
+        priorityCasesController = new ApexPages.StandardSetController(cases);
+        return null;
+    }
+}
+
