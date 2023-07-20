@@ -1,0 +1,20 @@
+<apex:page controller="CaseManagementController" lightningStylesheets="true">
+    <apex:form>
+        <apex:pageBlock title="Case Management">
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Sort By SLA" action="{!sortBySLA}" rerender="caseTable" />
+                <apex:commandButton value="Sort By Priority" action="{!sortByPriority}" rerender="caseTable" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!priorityCases}" var="case" id="caseTable">
+                <apex:column headerValue="Case Number">
+                    <apex:outputLink value="/{!case.Id}">{!case.CaseNumber}</apex:outputLink>
+                </apex:column>
+                <apex:column value="{!case.Subject}" />
+                <apex:column value="{!case.Status}" />
+                <apex:column value="{!case.Priority}" />
+                <apex:column value="{!case.Account.Name}" />
+                <apex:column value="{!case.Account.SLA__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
