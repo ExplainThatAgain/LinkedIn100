@@ -1,5 +1,36 @@
 #Day39
 
+/*This is a simpler query only using SOQL queries.
+
+
+
+/* This class uses the correct System.AccessLevel object and parameter withthe Database.getQueryLocator. USER_MODE is set.
+//If the user doesn't have access to one of the returned fields (Name, Cardholder__c, Cardholder__r.FirstName, or Date_of_Expiry) a Security Exception will be thrown.
+public class CreditCardSearchController {
+    
+    public ApexPages.StandardSetController cardList{
+        get{
+            if (cardList == null){
+            cardList = new ApexPages.StandardSetController(Database.getQueryLocator([SELECT Name, Cardholder__r.FirstName, Date_Issued__c, Date_of_Expiry__c FROM Credit_Card__c], System.AccessLevel.USER_MODE));
+            }
+            return cardList;
+        }
+        
+        
+        set;
+    }
+
+    public List<Credit_Card__c> getCards(){
+        return (List<Credit_Card__c>) cardList.getRecords();
+        
+    }
+    
+}
+*/
+
+
+
+
 */This class has a SOQL query WITH SECURITY_ENFORCED but since it is in a getQueryLocator, it doesn't work properly.
 public class CreditCardSearchController {
     
@@ -20,3 +51,4 @@ public class CreditCardSearchController {
     }
     
 }
+*/
