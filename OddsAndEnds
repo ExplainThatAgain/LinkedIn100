@@ -1,0 +1,12 @@
+//Day38
+public without sharing class OddsAndEnds {
+    public void createCaseMethod(){
+        Case newCase = new Case(Status = 'New', Subject = 'Test Case', Priority = 'Normal');
+        insert as system newCase;
+        system.debug('New case details: ' + newCase);
+    }
+    public void searchSOSL(){
+        List<List<SObject>> listOfListOfSObjects = Search.query('FIND \'test\' IN ALL FIELDS RETURNING Account (Id, Name), Contact (Id, FirstName, LastName), Case (CaseNumber, Subject)', AccessLevel.SYSTEM_MODE);
+        System.debug('List of List of SObjects: ' + listOfListOfSObjects);
+    }
+}
