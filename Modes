@@ -1,0 +1,22 @@
+#Day39
+
+*/This class has a SOQL query WITH SECURITY_ENFORCED but since it is in a getQueryLocator, it doesn't work properly.
+public class CreditCardSearchController {
+    
+    public ApexPages.StandardSetController cardList{
+        get{
+            if (cardList == null){
+            cardList = new ApexPages.StandardSetController(Database.getQueryLocator([SELECT Name, Cardholder__r.FirstName FROM Credit_Card__c WITH SECURITY_ENFORCED]));
+            }
+            return cardList;
+        }
+        
+        
+        set;
+    }
+    
+    public List<Credit_Card__c> getCards(){
+        return (List<Credit_Card__c>) cardList.getRecords();
+    }
+    
+}
