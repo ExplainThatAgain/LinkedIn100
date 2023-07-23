@@ -1,8 +1,26 @@
 #Day39
 
-/*This is a simpler query only using SOQL queries.
+/*This is a simpler query only using SOQL queries instead of StandardSetController.
 
 
+public class CreditCardSearchController {
+    public List<Credit_Card__c> cards { get; set; }
+
+    public CreditCardSearchController() {
+        cards = cardList(); // Call the cardList method to populate the Cards list
+    }
+
+    public List<Credit_Card__c> cardList() {
+        try{
+            return [SELECT Name, Cardholder__r.FirstName, Date_Issued__c, Date_of_Expiry__c FROM Credit_Card__c WITH SECURITY_ENFORCED];
+        }
+        catch(QueryException qe) {
+            System.debug('Query exceptions: '+ qe.getInaccessibleFields() + qe.getMessage());
+            return new List<Credit_Card__c>();
+            //Returns an empty list instead of an exception
+        }
+    }
+}
 
 /* This class uses the correct System.AccessLevel object and parameter withthe Database.getQueryLocator. USER_MODE is set.
 //If the user doesn't have access to one of the returned fields (Name, Cardholder__c, Cardholder__r.FirstName, or Date_of_Expiry) a Security Exception will be thrown.
