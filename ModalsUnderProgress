@@ -1,0 +1,64 @@
+//modalComponent.js
+
+import { LightningElement } from 'lwc';
+import LightningModal from 'lightning/modal';
+
+
+export default class ModalComponent extends LightningElement {
+    handleYes(){
+        alert('Here\'s your coffe!');
+    
+    }
+    
+    handlePass(){
+        this.close();
+    }
+    
+}
+
+//modalComponent.html
+
+<template>
+    <lightning-modal-header label="At the Cafe"></lightning-modal-header>
+    <lightning-modal-body>
+        <p>Would you like a coffee?</p>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <lightning-button label = "Yes please!" onclick={handleYes}></lightning-button>
+        <lightning-button label = "I'll pass." onclick={handlePass}></lightning-button>
+    </lightning-modal-footer>
+    
+</template>
+
+//parentOfModalComponent.js
+
+import { LightningElement } from 'lwc';
+import modalComponent from 'c/modalComponent';
+
+export default class ParentOfModalComponent extends LightningElement {
+    
+    handleReady(){
+        modalComponent.open(
+            {size: 'medium'}
+        );
+    }
+    handleMoreTime(){
+       this.time = true;
+    }
+}
+
+//parentOfModalComponent.html
+
+<template>
+    <lightning-card title="Welcome to the Cafe"></lightning-card>
+    <div>
+        <h3>Are you ready to order?</h3>
+    </div>
+    <div if:true={time}>
+        <p>Take your time!</p>
+    </div>
+    <div slot="footer">
+        <lightning-button label="Ready!" onclick={handleReady}></lightning-button>
+        <lightning-button label="More time, please." onclick={handleMoreTime} value={time}></lightning-button>
+    </div>
+</template>
